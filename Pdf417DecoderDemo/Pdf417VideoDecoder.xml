@@ -1,0 +1,755 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Pdf417VideoDecoder</name>
+    </assembly>
+    <members>
+        <member name="T:Pdf417VideoDecoderDemo.Camera">
+            <summary>
+            The Camera class is an main class that is a wrapper for video device.
+            </summary>
+            
+            <author> free5lot (free5lot@yandex.ru) </author>
+            <version> 2013.12.16 </version>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.Camera.GetFrameSizeList(System.Runtime.InteropServices.ComTypes.IMoniker)">
+            <summary>
+            Returns available frame sizes with RGB color system for device moniker
+            </summary>
+            <param name="moniker">Moniker (device identification) of camera.</param>
+            <returns>List of frame sizes with RGB color system of device</returns>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.Camera.#ctor(System.Windows.Forms.Control,System.Runtime.InteropServices.ComTypes.IMoniker,Pdf417VideoDecoderDemo.FrameSize)">
+            <summary>
+            Initializes camera and connects it to HostingControl and Moniker.
+            </summary>
+            <param name="DisplayPanel">Control that is used for hosting camera's output.</param>
+            <param name="Moniker">Moniker (device identification) of camera.</param>
+            <param name="FrameSize">Frame size</param>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.Camera.Dispose">
+            <summary>
+            Close and dispose all camera and DirectX stuff.
+            </summary>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.Camera.BuildGraph">
+            <summary>
+            Builds DirectShow graph for rendering.
+            </summary>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.Camera.RunGraph">
+            <summary>
+            Runs DirectShow graph for rendering.
+            </summary>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.Camera.PauseGraph">
+            <summary>
+            Runs DirectShow graph for rendering.
+            </summary>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.Camera.SnapshotSourceImage">
+            <summary>
+            Make snapshot of source image. Much faster than SnapshotOutputImage.
+            </summary>
+            <returns>Snapshot as a Bitmap</returns>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.Camera.IsFrameSizeAppropiate(DirectShowLib.AMMediaType,Pdf417VideoDecoderDemo.FrameSize)">
+            <summary>
+            Checks if AMMediaType's frame size is appropriate for desired frame size.
+            </summary>
+            <param name="media_type">Media type to analyze.</param>
+            <param name="RefFrameSize">Desired frame size. Can be null or have 0 for height or width if it's not important.</param>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.Camera.GetFrameSizeForMediaType(DirectShowLib.AMMediaType)">
+            <summary>
+            Get resolution from if AMMediaType's frame size is appropriate for frame size_desired
+            </summary>
+            <param name="media_type">Media type to analyze.</param>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.Camera.GetBitCountForMediaType(DirectShowLib.AMMediaType)">
+            <summary>
+            Get bit count for mediatype
+            </summary>
+            <param name="media_type">Media type to analyze.</param>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.Camera.IsColorBitCountOK(System.Int32)">
+            <summary>
+            Check if bit count is appropriate for us
+            </summary>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.Camera.AnalyzeMediaType(DirectShowLib.AMMediaType,Pdf417VideoDecoderDemo.FrameSize,System.Boolean@,System.Boolean@,System.Boolean@)">
+            <summary>
+            Analyze AMMediaType during enumeration and decide if it's good choice for us.
+            </summary>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.Camera.SetSourceParams(DirectShowLib.IPin,Pdf417VideoDecoderDemo.FrameSize)">
+            <summary>
+            Sets parameters for source capture pin.
+            </summary>
+            <param name="pinSourceCapture">Pin of source capture.</param>
+            <param name="FrameSize">frame size to set if possible.</param>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.Camera.GraphBuilding_ConnectPins">
+            <summary>
+            Connects pins of graph
+            </summary>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.Camera.AddFilter_Source">
+            <summary>
+            Adds video source filter to the filter graph.
+            </summary>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.Camera.AddFilter_Renderer">
+            <summary>
+            Adds VMR9 (renderer) filter to the filter graph.
+            </summary>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.Camera.AddFilter_TeeSplitter">
+            <summary>
+            Adds tee splitter filter to split for grabber and for capture.
+            </summary>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.Camera.AddFilter_SampleGrabber">
+            <summary>
+            Adds SampleGrabber for screenshot making.
+            </summary>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.Camera.HostingControl_Paint(System.Object,System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            Handler of Paint event of HostingControl.
+            </summary>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.Camera.HostingControl_ResizeMove(System.Object,System.EventArgs)">
+            <summary>
+            Handler of Resize and Move events of HostingControl.
+            </summary>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.Camera.SystemEvents_DisplaySettingsChanged(System.Object,System.EventArgs)">
+            <summary>
+            Handler of SystemEvents.DisplaySettingsChanged.
+            </summary>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.Camera.GetFrameSizesAvailable(DirectShowLib.IBaseFilter)">
+            <summary>
+            Gets available frame sizes (which are appropriate for us) for capture filter.
+            </summary>
+            <param name="captureFilter">Capture filter for asking for frame size list.</param>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.Camera.GetSupportedFrameSizes(DirectShowLib.IPin)">
+            <summary>
+            Gets available supported frame sizes with 16 or 24 or 32 bits per color.
+            </summary>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.Camera.FreeMediaType(DirectShowLib.AMMediaType@)">
+            <summary>
+            Free media type if needed.
+            </summary>
+            <param name="media_type">Media type to free.</param>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.Camera.FreeSCCMemory(System.IntPtr@)">
+            <summary>
+            Free SCC (it's not used but required for GetStreamCaps()).
+            </summary>
+            <param name="pSCC">SCC to free.</param>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.Camera.SafeReleaseComObject(System.Object)">
+            <summary>
+            Releases COM object
+            </summary>
+            <param name="obj">COM object to release.</param>
+        </member>
+        <member name="T:Pdf417VideoDecoderDemo.FrameSize">
+            <summary>
+            Frame Size
+            </summary>
+        </member>
+        <member name="P:Pdf417VideoDecoderDemo.FrameSize.Width">
+            <summary>
+            Width of frame of video output.
+            </summary>
+        </member>
+        <member name="P:Pdf417VideoDecoderDemo.FrameSize.Height">
+            <summary>
+            Height of frame of video output.
+            </summary>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.FrameSize.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Constructor for <see cref="T:Pdf417VideoDecoderDemo.FrameSize"/> class.
+            </summary>
+            <param name="width">Width of frame of video output.</param>
+            <param name="height">Height of frame of video output.</param>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.Program.Main">
+            <summary>
+            The main entry point for the application.
+            </summary>
+        </member>
+        <member name="T:Pdf417VideoDecoderDemo.Pdf417VideoDecoder">
+            <summary>
+            Pdf417 camera captuer using Direct Show Library
+            </summary>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.Pdf417VideoDecoder.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.Pdf417VideoDecoder.OnLoad(System.Object,System.EventArgs)">
+            <summary>
+            Program initialization
+            </summary>
+            <param name="sender">Sender</param>
+            <param name="e">Event arguments</param>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.Pdf417VideoDecoder.OnResetButton(System.Object,System.EventArgs)">
+            <summary>
+            Reset button was pressed
+            </summary>
+            <param name="sender">Sender</param>
+            <param name="e">Event arguments</param>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.Pdf417VideoDecoder.OnGoToUri(System.Object,System.EventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender">Sender</param>
+            <param name="e">Event arguments</param>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.Pdf417VideoDecoder.OnResize(System.Object,System.EventArgs)">
+            <summary>
+            Resize window
+            </summary>
+            <param name="sender">Sender</param>
+            <param name="e">Event arguments</param>
+        </member>
+        <member name="F:Pdf417VideoDecoderDemo.Pdf417VideoDecoder.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.Pdf417VideoDecoder.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.Pdf417VideoDecoder.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:Pdf417VideoDecoderDemo.SampleGrabberHelper">
+            <summary>
+            Helper for SampleGrabber. Used to make screenshots (snapshots).
+            </summary>
+            <remarks>This class is inherited from <see cref="T:DirectShowLib.ISampleGrabberCB"/> class.</remarks>
+            <author> free5lot (free5lot@yandex.ru) </author>
+            <version> 2013.10.17 </version>
+        </member>
+        <member name="F:Pdf417VideoDecoderDemo.SampleGrabberHelper.m_PictureReady">
+            <summary>
+            Flag to wait for the async job to finish.
+            </summary>
+        </member>
+        <member name="F:Pdf417VideoDecoderDemo.SampleGrabberHelper.m_bWantOneFrame">
+            <summary>
+            Flag indicates we want to store a frame.
+            </summary>
+        </member>
+        <member name="F:Pdf417VideoDecoderDemo.SampleGrabberHelper.m_ipBuffer">
+            <summary>
+            Buffer for bitmap data.  Always release by caller.
+            </summary>
+        </member>
+        <member name="F:Pdf417VideoDecoderDemo.SampleGrabberHelper.m_videoWidth">
+            <summary>
+            Video frame width. Calculated once in constructor for perf.
+            </summary>
+        </member>
+        <member name="F:Pdf417VideoDecoderDemo.SampleGrabberHelper.m_videoHeight">
+            <summary>
+            Video frame height. Calculated once in constructor for perf.
+            </summary>
+        </member>
+        <member name="F:Pdf417VideoDecoderDemo.SampleGrabberHelper.m_videoBitCount">
+            <summary>
+            Video frame bits per pixel.
+            </summary>
+        </member>
+        <member name="F:Pdf417VideoDecoderDemo.SampleGrabberHelper.m_ImageSize">
+            <summary>
+            Size of frame in bytes.
+            </summary>
+        </member>
+        <member name="F:Pdf417VideoDecoderDemo.SampleGrabberHelper.m_SampleGrabber">
+            <summary>
+            Pointer to COM-interface ISampleGrabber.
+            </summary>
+        </member>
+        <member name="F:Pdf417VideoDecoderDemo.SampleGrabberHelper.m_bBufferSamplesOfCurrentFrame">
+            <summary>
+            Flag means should helper store (buffer) samples of current frame or not.
+            </summary>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.SampleGrabberHelper.#ctor(DirectShowLib.ISampleGrabber,System.Boolean)">
+            <summary>
+            Default constructor for <see cref="T:Pdf417VideoDecoderDemo.SampleGrabberHelper"/> class.
+            </summary>
+            <param name="sampleGrabber">Pointer to COM-interface ISampleGrabber.</param>
+            <param name="buffer_samples_of_current_frame">Flag means should helper store (buffer) samples of current frame or not.</param>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.SampleGrabberHelper.Dispose">
+            <summary>
+            Disposes object and snapshot.
+            </summary>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.SampleGrabberHelper.ConfigureMode">
+            <summary>
+            Configures mode (mediatype, format type and etc).
+            </summary>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.SampleGrabberHelper.SaveMode">
+            <summary>
+            Gets and saves mode (mediatype, format type and etc). 
+            </summary>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.SampleGrabberHelper.DirectShowLib#ISampleGrabberCB#SampleCB(System.Double,DirectShowLib.IMediaSample)">
+            <summary>
+            SampleCB callback (NOT USED). It should be implemented for ISampleGrabberCB
+            </summary>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.SampleGrabberHelper.DirectShowLib#ISampleGrabberCB#BufferCB(System.Double,System.IntPtr,System.Int32)">
+            <summary>
+            BufferCB callback 
+            </summary>
+            <remarks>COULD BE EXECUTED FROM FOREIGN THREAD.</remarks>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.SampleGrabberHelper.SnapshotNextFrame">
+            <summary>
+            Makes a snapshot of next frame
+            </summary>
+            <returns>Bitmap with snapshot</returns>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.SampleGrabberHelper.SnapshotCurrentFrame">
+            <summary>
+            Makes a snapshot of current frame
+            </summary>
+            <returns>Bitmap with snapshot</returns>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.SampleGrabberHelper.GetNextFrame">
+            <summary>
+            Get the image from the Still pin.  The returned image can turned into a bitmap with
+            Bitmap b = new Bitmap(cam.Width, cam.Height, cam.Stride, PixelFormat.Format24bppRgb, m_ip);
+            If the image is upside down, you can fix it with
+            b.RotateFlip(RotateFlipType.RotateNoneFlipY);
+            </summary>
+            <returns>Returned pointer to be freed by caller with Marshal.FreeCoTaskMem</returns>
+        </member>
+        <member name="M:Pdf417VideoDecoderDemo.SampleGrabberHelper.GetCurrentFrame">
+            <summary>
+            Grab a snapshot of the most recent image played.
+            Returns A pointer to the raw pixel data.
+            Caller must release this memory with Marshal.FreeCoTaskMem when it is no longer needed.
+            </summary>
+            <returns>A pointer to the raw pixel data</returns>
+        </member>
+        <member name="T:Pdf417VideoDecoderDemo.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Pdf417VideoDecoderDemo.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Pdf417VideoDecoderDemo.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="T:DirectShowLib.AMRenderExFlags">
+            <summary>
+            From _AM_RENSDEREXFLAGS
+            </summary>
+        </member>
+        <member name="T:DirectShowLib.CDef">
+            <summary>
+            From CDEF_CLASS_* defines
+            </summary>
+        </member>
+        <member name="T:DirectShowLib.FilterState">
+            <summary>
+            From FILTER_STATE
+            </summary>
+        </member>
+        <member name="T:DirectShowLib.KSPropertySupport">
+            <summary>
+            From KSPROPERTY_SUPPORT_* defines
+            </summary>
+        </member>
+        <member name="T:DirectShowLib.PinConnectedStatus">
+            <summary>
+            Not from DirectShow
+            </summary>
+        </member>
+        <member name="T:DirectShowLib.PinDirection">
+            <summary>
+            From PIN_DIRECTION
+            </summary>
+        </member>
+        <member name="T:DirectShowLib.VMR9AspectRatioMode">
+            <summary>
+            From VMR9AspectRatioMode
+            </summary>
+        </member>
+        <member name="T:DirectShowLib.VMR9Mode">
+            <summary>
+            From VMR9Mode
+            </summary>
+        </member>
+        <member name="T:DirectShowLib.VMR9RenderPrefs">
+            <summary>
+            From VMR9RenderPrefs
+            </summary>
+        </member>
+        <member name="T:DirectShowLib.VMR9SampleFormat">
+            <summary>
+            From VMR9_SampleFormat
+            </summary>
+        </member>
+        <member name="M:DirectShowLib.IPin.ConnectionMediaType(DirectShowLib.AMMediaType)">
+            <summary>
+            Release returned parameter with DsUtils.FreeAMMediaType
+            </summary>
+        </member>
+        <member name="M:DirectShowLib.IPin.QueryPinInfo(DirectShowLib.PinInfo@)">
+            <summary>
+            Release returned parameter with DsUtils.FreePinInfo
+            </summary>
+        </member>
+        <member name="M:DirectShowLib.IMediaSample.GetMediaType(DirectShowLib.AMMediaType@)">
+            <summary>
+            Returned object must be released with DsUtils.FreeAMMediaType()
+            </summary>
+        </member>
+        <member name="M:DirectShowLib.ISampleGrabberCB.SampleCB(System.Double,DirectShowLib.IMediaSample)">
+            <summary>
+            When called, callee must release pSample
+            </summary>
+        </member>
+        <member name="T:DirectShowLib.PinInfo">
+            <summary>
+            From PIN_INFO
+            </summary>
+        </member>
+        <member name="T:DirectShowLib.FilterInfo">
+            <summary>
+            From FILTER_INFO
+            </summary>
+        </member>
+        <member name="T:DirectShowLib.VMR9VideoStreamInfo">
+            <summary>
+            From VMR9VideoStreamInfo
+            </summary>
+        </member>
+        <member name="T:DirectShowLib.FilterGraph">
+            <summary>
+            CLSID_FilterGraph
+            </summary>
+        </member>
+        <member name="T:DirectShowLib.VideoMixingRenderer9">
+            <summary>
+            CLSID_VideoMixingRenderer9
+            </summary>
+        </member>
+        <member name="T:DirectShowLib.SmartTee">
+            <summary>
+            CLSID_SmartTee
+            </summary>
+        </member>
+        <member name="T:DirectShowLib.SampleGrabber">
+            <summary>
+            CLSID_SampleGrabber
+            </summary>
+        </member>
+        <member name="T:DirectShowLib.CreateDevEnum">
+            <summary>
+            CLSID_SystemDeviceEnum
+            </summary>
+        </member>
+        <member name="F:DirectShowLib.FilterCategory.VideoInputDevice">
+            <summary> CLSID_VideoInputDeviceCategory, video capture category </summary>
+        </member>
+        <member name="F:DirectShowLib.MediaType.Video">
+            <summary> MEDIATYPE_Video 'vids' </summary>
+        </member>
+        <member name="F:DirectShowLib.MediaSubType.RGB16_D3D_DX7_RT">
+            <summary> MEDIASUBTYPE_RGB16_D3D_DX7_RT </summary>
+        </member>
+        <member name="F:DirectShowLib.MediaSubType.RGB16_D3D_DX9_RT">
+            <summary> MEDIASUBTYPE_RGB16_D3D_DX9_RT </summary>
+        </member>
+        <member name="F:DirectShowLib.MediaSubType.RGB24">
+            <summary> MEDIASUBTYPE_RGB24 </summary>
+        </member>
+        <member name="F:DirectShowLib.MediaSubType.RGB32">
+            <summary> MEDIASUBTYPE_RGB32 </summary>
+        </member>
+        <member name="F:DirectShowLib.MediaSubType.ARGB32">
+            <summary> MEDIASUBTYPE_ARGB32 </summary>
+        </member>
+        <member name="F:DirectShowLib.MediaSubType.YUY2">
+            <summary> MEDIASUBTYPE_YUY2 </summary>
+        </member>
+        <member name="F:DirectShowLib.FormatType.VideoInfo">
+            <summary> FORMAT_VideoInfo </summary>
+        </member>
+        <member name="F:DirectShowLib.PropSetID.Pin">
+            <summary> AMPROPSETID_Pin</summary>
+        </member>
+        <member name="T:DirectShowLib.AMMediaType">
+            <summary>
+            From AM_MEDIA_TYPE - When you are done with an instance of this class,
+            it should be released with FreeAMMediaType() to avoid leaking
+            </summary>
+        </member>
+        <member name="T:DirectShowLib.BitmapInfoHeader">
+            <summary>
+            From BITMAPINFOHEADER
+            </summary>
+        </member>
+        <member name="T:DirectShowLib.VideoInfoHeader">
+            <summary>
+            From VIDEOINFOHEADER
+            </summary>
+        </member>
+        <member name="T:DirectShowLib.DsLong">
+            <summary>
+            DirectShowLib.DsLong is a wrapper class around a <see cref="T:System.Int64"/> value type.
+            </summary>
+            <remarks>
+            This class is necessary to enable null paramters passing.
+            </remarks>
+        </member>
+        <member name="M:DirectShowLib.DsLong.#ctor(System.Int64)">
+            <summary>
+            Constructor
+            Initialize a new instance of DirectShowLib.DsLong with the Value parameter
+            </summary>
+            <param name="Value">Value to assign to this new instance</param>
+        </member>
+        <member name="M:DirectShowLib.DsLong.ToString">
+            <summary>
+            Get a string representation of this DirectShowLib.DsLong Instance.
+            </summary>
+            <returns>A string representing this instance</returns>
+        </member>
+        <member name="T:DirectShowLib.DsRect">
+            <summary>
+            DirectShowLib.DsRect is a managed representation of the Win32 RECT structure.
+            </summary>
+        </member>
+        <member name="M:DirectShowLib.DsRect.#ctor">
+            <summary>
+            Empty contructor. Initialize all fields to 0
+            </summary>
+        </member>
+        <member name="M:DirectShowLib.DsRect.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            A parametred constructor. Initialize fields with given values.
+            </summary>
+            <param name="left">the left value</param>
+            <param name="top">the top value</param>
+            <param name="right">the right value</param>
+            <param name="bottom">the bottom value</param>
+        </member>
+        <member name="M:DirectShowLib.DsRect.#ctor(System.Drawing.Rectangle)">
+            <summary>
+            A parametred constructor. Initialize fields with a given <see cref="T:System.Drawing.Rectangle"/>.
+            </summary>
+            <param name="rectangle">A <see cref="T:System.Drawing.Rectangle"/></param>
+            <remarks>
+            Warning, DsRect define a rectangle by defining two of his corners and <see cref="T:System.Drawing.Rectangle"/> define a rectangle with his upper/left corner, his width and his height.
+            </remarks>
+        </member>
+        <member name="M:DirectShowLib.DsRect.ToString">
+            <summary>
+            Provide de string representation of this DsRect instance
+            </summary>
+            <returns>A string formated like this : [left, top - right, bottom]</returns>
+        </member>
+        <member name="M:DirectShowLib.DsRect.op_Implicit(DirectShowLib.DsRect)~System.Drawing.Rectangle">
+             <summary>
+             Define implicit cast between DirectShowLib.DsRect and System.Drawing.Rectangle for languages supporting this feature.
+             VB.Net doesn't support implicit cast. <see cref="M:DirectShowLib.DsRect.ToRectangle"/> for similar functionality.
+             <code>
+               // Define a new Rectangle instance
+               Rectangle r = new Rectangle(0, 0, 100, 100);
+               // Do implicit cast between Rectangle and DsRect
+               DsRect dsR = r;
+            
+               Console.WriteLine(dsR.ToString());
+             </code>
+             </summary>
+             <param name="r">a DsRect to be cast</param>
+             <returns>A casted System.Drawing.Rectangle</returns>
+        </member>
+        <member name="M:DirectShowLib.DsRect.op_Implicit(System.Drawing.Rectangle)~DirectShowLib.DsRect">
+             <summary>
+             Define implicit cast between System.Drawing.Rectangle and DirectShowLib.DsRect for languages supporting this feature.
+             VB.Net doesn't support implicit cast. <see cref="M:DirectShowLib.DsRect.FromRectangle(System.Drawing.Rectangle)"/> for similar functionality.
+             <code>
+               // Define a new DsRect instance
+               DsRect dsR = new DsRect(0, 0, 100, 100);
+               // Do implicit cast between DsRect and Rectangle
+               Rectangle r = dsR;
+            
+               Console.WriteLine(r.ToString());
+             </code>
+             </summary>
+             <param name="r">A System.Drawing.Rectangle to be cast</param>
+             <returns>A casted DsRect</returns>
+        </member>
+        <member name="M:DirectShowLib.DsRect.ToRectangle">
+            <summary>
+            Get the System.Drawing.Rectangle equivalent to this DirectShowLib.DsRect instance.
+            </summary>
+            <returns>A System.Drawing.Rectangle</returns>
+        </member>
+        <member name="M:DirectShowLib.DsRect.FromRectangle(System.Drawing.Rectangle)">
+            <summary>
+            Get a new DirectShowLib.DsRect instance for a given <see cref="T:System.Drawing.Rectangle"/>
+            </summary>
+            <param name="r">The <see cref="T:System.Drawing.Rectangle"/> used to initialize this new DirectShowLib.DsGuid</param>
+            <returns>A new instance of DirectShowLib.DsGuid</returns>
+        </member>
+        <member name="M:DirectShowLib.DsError.ThrowExceptionForHR(System.Int32)">
+            <summary>
+            If hr has a "failed" status code (E_*), throw an exception.  Note that status
+            messages (S_*) are not considered failure codes.  If DirectShow error text
+            is available, it is used to build the exception, otherwise a generic com error
+            is thrown.
+            </summary>
+            <param name="hr">The HRESULT to check</param>
+        </member>
+        <member name="M:DirectShowLib.DsError.GetErrorText(System.Int32)">
+            <summary>
+            Returns a string describing a DS error.  Works for both error codes
+            (values less than 0) and Status codes (values more than 0)
+            </summary>
+            <param name="hr">HRESULT for which to get description</param>
+            <returns>The string, or null if no error text can be found</returns>
+        </member>
+        <member name="M:DirectShowLib.DsUtils.FreeAMMediaType(DirectShowLib.AMMediaType)">
+            <summary>
+             Free the nested structures and release any
+             COM objects within an AMMediaType struct.
+            </summary>
+        </member>
+        <member name="M:DirectShowLib.DsUtils.FreePinInfo(DirectShowLib.PinInfo)">
+            <summary>
+             Free the nested interfaces within a PinInfo struct.
+            </summary>
+        </member>
+        <member name="T:DirectShowLib.DsDevice">
+            <summary>
+            DsDevice
+            </summary>
+        </member>
+        <member name="P:DirectShowLib.DsDevice.DevicePath">
+            <summary>
+            Returns a unique identifier for a device
+            </summary>
+        </member>
+        <member name="P:DirectShowLib.DsDevice.ClassID">
+            <summary>
+            Returns the ClassID for a device
+            </summary>
+        </member>
+        <member name="M:DirectShowLib.DsDevice.GetDevicesOfCat(System.Guid)">
+            <summary>
+            Returns an array of DsDevices of type devcat.
+            </summary>
+        </member>
+        <member name="M:DirectShowLib.DsDevice.GetPropBagValue(System.String)">
+            <summary>
+            Get a specific PropertyBag value from a moniker
+            </summary>
+            <param name="sPropName">The name of the value to retrieve</param>
+            <returns>String or null on error</returns>
+        </member>
+        <member name="M:DirectShowLib.DsDevice.Dispose">
+            <summary>
+            Dispose
+            </summary>
+        </member>
+        <member name="M:DirectShowLib.DsFindPin.ByDirection(DirectShowLib.IBaseFilter,DirectShowLib.PinDirection,System.Int32)">
+            <summary>
+            Scans a filter's pins looking for a pin in the specified direction
+            </summary>
+            <param name="vSource">The filter to scan</param>
+            <param name="vDir">The direction to find</param>
+            <param name="iIndex">Zero based index (ie 2 will return the third pin in the specified direction)</param>
+            <returns>The matching pin, or null if not found</returns>
+        </member>
+        <member name="M:DirectShowLib.DsFindPin.ByName(DirectShowLib.IBaseFilter,System.String)">
+            <summary>
+            Scans a filter's pins looking for a pin with the specified name
+            </summary>
+            <param name="vSource">The filter to scan</param>
+            <param name="vPinName">The pin name to find</param>
+            <returns>The matching pin, or null if not found</returns>
+        </member>
+        <member name="M:DirectShowLib.DsFindPin.ByConnectionStatus(DirectShowLib.IBaseFilter,DirectShowLib.PinConnectedStatus,System.Int32)">
+            <summary>
+            Scans a filter's pins looking for a pin with the specified connection status
+            </summary>
+            <param name="vSource">The filter to scan</param>
+            <param name="vStat">The status to find (connected/unconnected)</param>
+            <param name="iIndex">Zero based index (ie 2 will return the third pin with the specified status)</param>
+            <returns>The matching pin, or null if not found</returns>
+        </member>
+        <member name="T:DirectShowLib.DsMarshaler">
+             <summary>
+             This abstract class contains definitions for use in implementing a custom marshaler.
+            
+             MarshalManagedToNative() gets called before the COM method, and MarshalNativeToManaged() gets
+             called after.  This allows for allocating a correctly sized memory block for the COM call,
+             then to break up the memory block and build an object that c# can digest.
+             </summary>
+        </member>
+        <member name="F:DirectShowLib.DsMarshaler.m_cookie">
+            The cookie isn't currently being used.
+        </member>
+        <member name="F:DirectShowLib.DsMarshaler.m_obj">
+            The managed object passed in to MarshalManagedToNative, and modified in MarshalNativeToManaged
+        </member>
+        <member name="M:DirectShowLib.DsMarshaler.#ctor(System.String)">
+            <summary>
+            The constructor.  This is called from GetInstance (below)
+            </summary>
+            <param name="cookie">Cookie</param>
+        </member>
+        <member name="M:DirectShowLib.DsMarshaler.MarshalManagedToNative(System.Object)">
+            Called just before invoking the COM method.  The returned IntPtr is what goes on the stack
+            for the COM call.  The input arg is the parameter that was passed to the method.
+        </member>
+        <member name="M:DirectShowLib.DsMarshaler.MarshalNativeToManaged(System.IntPtr)">
+            Called just after invoking the COM method.  The IntPtr is the same one that just got returned
+            from MarshalManagedToNative.  The return value is unused.
+        </member>
+        <member name="M:DirectShowLib.DsMarshaler.CleanUpNativeData(System.IntPtr)">
+            Release the (now unused) buffer
+        </member>
+        <member name="M:DirectShowLib.DsMarshaler.CleanUpManagedData(System.Object)">
+            Release the (now unused) managed object
+        </member>
+        <member name="M:DirectShowLib.DsMarshaler.GetNativeDataSize">
+            This routine is (apparently) never called by the marshaler.  However it can be useful.
+        </member>
+    </members>
+</doc>

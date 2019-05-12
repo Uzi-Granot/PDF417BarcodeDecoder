@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Pdf417DecoderLibrary</name>
+    </assembly>
+    <members>
+        <member name="T:Pdf417DecoderLibrary.BarcodeInfo">
+            <summary>
+            Barcode results extra information
+            </summary>
+        </member>
+        <member name="P:Pdf417DecoderLibrary.BarcodeInfo.BarcodeData">
+            <summary>
+            Barcode binary (byte array) data
+            </summary>
+        </member>
+        <member name="P:Pdf417DecoderLibrary.BarcodeInfo.CharacterSet">
+            <summary>
+            Global Label Identifier character set (ISO-8859-n)
+            The n represent part number 1 to 9, 13 and 15
+            </summary>
+        </member>
+        <member name="P:Pdf417DecoderLibrary.BarcodeInfo.GliCharacterSetNo">
+            <summary>
+            Global Label Identifier character set number
+            This number is two more than the part number
+            </summary>
+        </member>
+        <member name="P:Pdf417DecoderLibrary.BarcodeInfo.GliGeneralPurpose">
+            <summary>
+            Global label identifier general purpose number
+            code word 926 value 900 to 810899
+            </summary>
+        </member>
+        <member name="P:Pdf417DecoderLibrary.BarcodeInfo.GliUserDefined">
+            <summary>
+            Global label identifier user defined number
+            code word 925 value 810,900 to 811,799
+            </summary>
+        </member>
+        <member name="P:Pdf417DecoderLibrary.BarcodeInfo.DataColumns">
+            <summary>
+            Data columns
+            </summary>
+        </member>
+        <member name="P:Pdf417DecoderLibrary.BarcodeInfo.DataRows">
+            <summary>
+            data rows
+            </summary>
+        </member>
+        <member name="P:Pdf417DecoderLibrary.BarcodeInfo.ErrorCorrectionLength">
+            <summary>
+            Error correction length
+            </summary>
+        </member>
+        <member name="P:Pdf417DecoderLibrary.BarcodeInfo.ErrorCorrectionCount">
+            <summary>
+            Error correction count
+            </summary>
+        </member>
+        <member name="T:Pdf417DecoderLibrary.Pdf417Decoder">
+            <summary>
+            PDF417 barcode decoder class
+            </summary>
+        </member>
+        <member name="F:Pdf417DecoderLibrary.Pdf417Decoder.VersionNumber">
+            <summary>
+            program version number
+            </summary>
+        </member>
+        <member name="P:Pdf417DecoderLibrary.Pdf417Decoder.BarcodesData">
+            <summary>
+            Returned array of barcodes binary data
+            </summary>
+        </member>
+        <member name="P:Pdf417DecoderLibrary.Pdf417Decoder.BarcodesInfo">
+            <summary>
+            Returned array of barcodes binary data plus extra information
+            </summary>
+        </member>
+        <member name="M:Pdf417DecoderLibrary.Pdf417Decoder.Decode(System.Drawing.Bitmap)">
+            <summary>
+            Decode PDF417 barcode image into binary array
+            </summary>
+            <param name="InputImage">Barcode image bitmap</param>
+            <returns>Count of decoded barcodes or zero</returns>
+        </member>
+        <member name="M:Pdf417DecoderLibrary.Pdf417Decoder.BinaryDataToString(System.Int32)">
+            <summary>
+            Convert binary data to string for one result
+            </summary>
+            <returns>Text string</returns>
+        </member>
+        <member name="M:Pdf417DecoderLibrary.Pdf417Decoder.BinaryDataToString(System.Byte[],System.String)">
+            <summary>
+            Convert binary data array to text string
+            </summary>
+            <param name="BarcodeBinaryData">Binary byte array</param>
+            <param name="IsoStandard">ISO standard "ISO-8859-part"</param>
+            <returns>Text string</returns>
+        </member>
+        <member name="T:Pdf417DecoderLibrary.Pdf417Decoder.SymbolComp">
+            <summary>
+            define comparer class
+            compare symbol bits only (bits 29 to bit 12)
+            </summary>
+        </member>
+        <member name="M:Pdf417DecoderLibrary.Pdf417Decoder.SymbolComp.Compare(System.Int32,System.Int32)">
+            <summary>
+            Compare two barcodes symbols
+            </summary>
+            <param name="One">First symbol</param>
+            <param name="Two">Second symbol</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
